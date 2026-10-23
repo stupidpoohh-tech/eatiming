@@ -2,10 +2,12 @@ import { ArrowRight, CheckCircle2, Info, Utensils } from 'lucide-react';
 import type { RankedFood } from '../../shared/ranking';
 import type { ReactionSummary } from '../../shared/types';
 
-const FEATURED_IMAGE_POSITIONS: Record<string, string> = {
-  '닭죽': '0% 50%',
-  '계란찜': '50% 50%',
-  '구운 흰살 생선 플레이트': '100% 50%',
+// Selected, dish-specific Pexels photographs; other foods fall back to a neutral illustrated card.
+// Licensed for use under https://www.pexels.com/license/
+const FEATURED_IMAGES: Record<string, string> = {
+  '닭죽': 'https://images.pexels.com/photos/33171278/pexels-photo-33171278.jpeg?auto=compress&cs=tinysrgb&w=540',
+  '계란찜': 'https://images.pexels.com/photos/19955959/pexels-photo-19955959.jpeg?auto=compress&cs=tinysrgb&w=540',
+  '구운 흰살 생선 플레이트': 'https://images.pexels.com/photos/8982349/pexels-photo-8982349.jpeg?auto=compress&cs=tinysrgb&w=540',
 };
 
 const STATUS_COPY = {
@@ -71,7 +73,7 @@ export function FeaturedShowcase({
       </div>
       <div className="-mx-3.5 flex snap-x snap-mandatory gap-2.5 overflow-x-auto px-3.5 pb-1 scrollbar-none sm:mx-0 sm:px-0" data-testid="featured-scroll">
         {items.map((item) => {
-          const pos = FEATURED_IMAGE_POSITIONS[item.food.name];
+          const photo = FEATURED_IMAGES[item.food.name];
           const summary = summaryMap.get(item.food.id);
           const hasRecord = !!summary && (summary.good + summary.ok + summary.bad) > 0;
           return (
@@ -80,9 +82,13 @@ export function FeaturedShowcase({
               data-testid="featured-food" data-featured-food={item.food.name}
               aria-label={`${item.food.name} 상세 보기, ${STATUS_COPY[item.status]}`}>
               <div className="relative aspect-[1.34] w-full overflow-hidden bg-[#FFF2E7]"
-                role="img" aria-label={pos ? `${item.food.name} 사진` : `${item.food.name} 이미지 준비 중`}
-                style={pos ? { backgroundImage: "url('/featured-foods.webp')", backgroundSize: '300% 100%', backgroundPosition: pos } : undefined}>
-                {!pos && <div className="flex h-full flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-[#FFF7ED] to-[#FBE8D7] text-brand-500"><Utensils size={30} /><span className="text-[11px] font-semibold text-brand-700">사진 준비 중</span></div>}
+                role="img" aria-label={photo ? `${item.food.name} 참고 사진` : `${item.food.name} 이미지 준비 중`}>
+                <div className="absolute inset-0 flex flex-col items-center justify-center gap-1.5 bg-gradient-to-br from-[#FFF7ED] to-[#FBE8D7] text-brand-500">
+                  <Utensils size={30} /><span className="text-[11px] font-semibold text-brand-700">사진 준비 중</span>
+                </div>
+                {photo && <img src={photo} alt="" loading="lazy" decoding="async" referrerPolicy="no-referrer"
+                  className="absolute inset-0 h-full w-full object-cover"
+                  onError={(e) => { e.currentTarget.style.display = 'none'; }} />}
                 <span className={`absolute bottom-2 left-2 rounded-full px-2 py-1 text-[10px] font-extrabold shadow-sm ${item.status === 'easy' ? 'bg-[#E6F4E8] text-[#287247]' : item.status === 'depends' ? 'bg-[#FFF0C9] text-[#976200]' : 'bg-[#FBE3E0] text-[#AF504B]'}`}>
                   {item.status === 'easy' && <CheckCircle2 size={11} className="mr-0.5 inline" />}
                   {STATUS_COPY[item.status]}
