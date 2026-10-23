@@ -25,7 +25,7 @@ export function LoginRequired({ what }: { what: string }) {
       <p className="font-semibold">{what}은 로그인 후 사용할 수 있어요</p>
       <p className="mt-1 text-sm text-ink-mute">개인 기록은 본인 계정에만 저장되고, 직접 허용한 범위만 동반자에게 공유됩니다.</p>
       <div className="mt-4 flex justify-center gap-2">
-        <Link to="/login" className="tap inline-flex h-11 items-center rounded-xl bg-sage-600 px-5 font-semibold text-white">
+        <Link to="/login" className="tap inline-flex h-11 items-center rounded-xl bg-brand-600 px-5 font-semibold text-white">
           로그인
         </Link>
         <Link to="/signup" className="tap inline-flex h-11 items-center rounded-xl border border-line bg-white px-5 font-semibold">
@@ -55,20 +55,20 @@ function MedsContent({ user }: { user: User }) {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-end justify-between pt-1">
+      <div className="flex flex-wrap items-start justify-between gap-3 pt-2">
         <div>
-          <h1 className="text-xl font-extrabold">약물 기록</h1>
+          <h1 className="text-2xl font-extrabold tracking-tight">약물 기록</h1>
           <p className="text-sm text-ink-mute">실제로 투여·복용한 기록만 저장됩니다.</p>
         </div>
         {list.length > 0 && (
-          <Button size="sm" variant="secondary" onClick={() => setSheet({ kind: 'add' })}>
+          <Button size="sm" onClick={() => setSheet({ kind: 'add' })}>
             <Plus size={16} aria-hidden /> 약물 추가
           </Button>
         )}
       </div>
 
       {welcome && (
-        <div className="rounded-2xl bg-sky-50 px-4 py-3 text-sm text-sky-700">
+        <div className="rounded-2xl bg-accent-50 px-4 py-3 text-sm text-accent-700">
           <p className="font-semibold">가입을 환영해요, {user.displayName}님.</p>
           <p className="mt-0.5">
             복용 중인 약물을 등록하고 마지막 투여일을 입력하면 메뉴 탐색 화면에 경과가 표시됩니다. 약물 없이 음식 탐색만 사용해도 괜찮아요.
@@ -138,9 +138,9 @@ function Presets({ onCreated, onCustom }: { onCreated: (m: Medication) => void; 
             type="button"
             disabled={create.isPending}
             onClick={() => create.mutate(p.body)}
-            className="tap flex items-center gap-3 rounded-2xl border border-line bg-ivory px-4 py-3 text-left hover:border-sage-400"
+            className="tap flex items-center gap-3 rounded-2xl border border-line bg-ivory px-4 py-3 text-left hover:border-brand-400"
           >
-            <span className="flex size-10 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
+            <span className="flex size-10 items-center justify-center rounded-xl bg-accent-100 text-accent-700">
               <MedIcon type={p.body.scheduleType} />
             </span>
             <span>
@@ -190,11 +190,11 @@ function MedCard({ med, logs, user, onSheet }: { med: Medication; logs: Medicati
   return (
     <Card className="space-y-4">
       <div className="flex items-start gap-3">
-        <span className="flex size-10 shrink-0 items-center justify-center rounded-xl bg-sky-100 text-sky-700">
+        <span className="flex size-11 shrink-0 items-center justify-center rounded-[14px] bg-accent-100 text-accent-700">
           <MedIcon type={med.scheduleType} />
         </span>
         <div className="min-w-0 flex-1">
-          <h2 className="text-lg font-bold">{med.name}</h2>
+          <h2 className="text-lg font-extrabold tracking-tight">{med.name}</h2>
           <p className="text-sm text-ink-mute">
             {med.scheduleType === 'interval'
               ? `${med.intervalDays}일 주기 투여`
@@ -204,7 +204,7 @@ function MedCard({ med, logs, user, onSheet }: { med: Medication; logs: Medicati
         </div>
         <button
           type="button"
-          className="tap rounded-full p-2 text-ink-soft hover:bg-ivory-deep"
+          className="tap rounded-full p-2 text-ink-soft hover:bg-ivory-deep focus-visible:outline-2"
           aria-label={`${med.name} 설정`}
           onClick={() => onSheet({ kind: 'edit', med })}
         >
@@ -212,7 +212,7 @@ function MedCard({ med, logs, user, onSheet }: { med: Medication; logs: Medicati
         </button>
       </div>
 
-      <div className="rounded-2xl bg-ivory p-3.5" data-testid={`timeline-${med.name}`}>
+      <div className="rounded-2xl bg-accent-50 p-3.5" data-testid={`timeline-${med.name}`}>
         <MedTimeline med={view} now={now} tz={user.timezone} />
       </div>
 
@@ -244,14 +244,14 @@ function MedCard({ med, logs, user, onSheet }: { med: Medication; logs: Medicati
         <div>
           <div className="mb-1.5 flex items-center justify-between">
             <h3 className="text-sm font-bold">개인 체감 패턴</h3>
-            <button type="button" className="tap rounded-full px-2 py-1 text-sm font-semibold text-sky-700" onClick={() => onSheet({ kind: 'pattern', med })}>
+            <button type="button" className="tap rounded-full px-2 py-1 text-sm font-semibold text-accent-700" onClick={() => onSheet({ kind: 'pattern', med })}>
               {med.patterns.length ? '수정' : '설정'}
             </button>
           </div>
           {med.patterns.length ? (
             <ul className="flex flex-wrap gap-1.5 text-xs">
               {med.patterns.map((p) => (
-                <li key={p.dayOffset} className="rounded-full bg-sky-50 px-2.5 py-1 text-sky-700">
+                <li key={p.dayOffset} className="rounded-full bg-accent-50 px-2.5 py-1 text-accent-700">
                   D{p.dayOffset} 식욕 억제 {PERCEIVED_LABEL[p.level]}
                 </li>
               ))}
@@ -392,7 +392,7 @@ function MedForm({ med, onClose, onCreated }: { med: Medication | null; onClose:
                 type="button"
                 aria-pressed={type === id}
                 onClick={() => setType(id)}
-                className={`tap rounded-xl border px-3 py-2.5 text-left ${type === id ? 'border-sage-500 bg-sage-50' : 'border-line bg-white'}`}
+                className={`tap rounded-xl border px-3 py-2.5 text-left ${type === id ? 'border-brand-500 bg-brand-50' : 'border-line bg-white'}`}
               >
                 <span className="block font-semibold">{label}</span>
                 <span className="block text-xs text-ink-mute">{hint}</span>
