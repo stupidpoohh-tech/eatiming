@@ -124,9 +124,7 @@ export const authRoutes = new Hono<AppEnv>()
       .first<{ n: number }>();
     if ((attempts?.n ?? 0) >= LOGIN_MAX_FAILS) fail(429, '로그인 시도가 너무 많습니다. 잠시 후 다시 시도해 주세요.');
 
-    const row = await c.env.DB.prepare('SELECT id, email, display_name, timezone, password_hash FROM users WHERE email = ?')
-      .bind(body.email)
-      .first<UserRow>();
+    const row = await c.env.DB.prepare('SELECT id, email, display_name, timezone, password_hash FROM users WHERE email = ?').bind(body.email).first<UserRow>();
     const ok = row ? await verifyPassword(body.password, row.password_hash) : false;
     if (!row || !ok) {
       await c.env.DB.prepare('INSERT INTO login_attempts (email, attempted_at) VALUES (?, ?)').bind(body.email, nowIso()).run();
@@ -141,7 +139,10 @@ export const authRoutes = new Hono<AppEnv>()
   })
   .post('/logout', async (c) => {
     const token = getCookie(c, SESSION_COOKIE);
-    if (token) await c.env.DB.prepare('DELETE FROM sessions WHERE token_hash = ?').bind(await sha256(token)).run();
+    if (token)
+      await c.env.DB.prepare('DELETE FROM sessions WHERE token_hash = ?')
+        .bind(await sha256(token))
+        .run();
     deleteCookie(c, SESSION_COOKIE, { path: '/' });
     return c.json({ ok: true });
   });

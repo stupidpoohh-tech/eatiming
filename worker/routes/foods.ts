@@ -27,7 +27,14 @@ export const foodRoutes = new Hono<AppEnv>().get('/', async (c) => {
     aliasMap.set(a.food_id, [...(aliasMap.get(a.food_id) ?? []), a.alias]);
   }
   const variantMap = new Map<string, FoodVariant[]>();
-  for (const v of variants.results as { id: string; food_id: string; name: string; status: FoodVariant['status']; fat_level: FoodVariant['fat']; note: string }[]) {
+  for (const v of variants.results as {
+    id: string;
+    food_id: string;
+    name: string;
+    status: FoodVariant['status'];
+    fat_level: FoodVariant['fat'];
+    note: string;
+  }[]) {
     variantMap.set(v.food_id, [...(variantMap.get(v.food_id) ?? []), { id: v.id, name: v.name, status: v.status, fat: v.fat_level, note: v.note }]);
   }
   const result: Food[] = (foods.results as unknown as FoodRow[]).map((f) => ({

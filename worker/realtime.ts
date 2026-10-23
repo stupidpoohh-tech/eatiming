@@ -108,18 +108,18 @@ export async function notify(env: Env, userId: string, topics: Topic[]): Promise
   }
 }
 
-export async function notifyAccountDeleted(
-  env: Env,
-  userId: string,
-  related: { owner_id: string; viewer_id: string }[],
-): Promise<void> {
+export async function notifyAccountDeleted(env: Env, userId: string, related: { owner_id: string; viewer_id: string }[]): Promise<void> {
   await Promise.all(
     related.map(async (r) => {
       if (r.owner_id === userId) {
-        await hub(env, userId).disconnectViewer(r.viewer_id).catch(() => undefined);
+        await hub(env, userId)
+          .disconnectViewer(r.viewer_id)
+          .catch(() => undefined);
         await notify(env, r.viewer_id, ['shares']);
       } else {
-        await hub(env, r.owner_id).disconnectViewer(userId).catch(() => undefined);
+        await hub(env, r.owner_id)
+          .disconnectViewer(userId)
+          .catch(() => undefined);
         await notify(env, r.owner_id, ['shares']);
       }
     }),

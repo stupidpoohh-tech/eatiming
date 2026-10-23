@@ -3,17 +3,7 @@ export type ConditionState = 'light' | 'normal' | 'hearty';
 export type ReactionKind = 'good' | 'ok' | 'bad';
 export type Level = 1 | 2 | 3;
 
-export type FormCategory =
-  | 'rice'
-  | 'soup'
-  | 'noodle'
-  | 'protein'
-  | 'pan'
-  | 'snack'
-  | 'side'
-  | 'healthy'
-  | 'bakery'
-  | 'drink';
+export type FormCategory = 'rice' | 'soup' | 'noodle' | 'protein' | 'pan' | 'snack' | 'side' | 'healthy' | 'bakery' | 'drink';
 
 export type Cuisine = 'korean' | 'chinese' | 'japanese' | 'western' | 'sea' | 'other';
 

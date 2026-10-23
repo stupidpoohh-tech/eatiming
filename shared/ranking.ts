@@ -37,11 +37,7 @@ export function conditionStatus(food: Pick<Food, 'status' | 'fat' | 'spice'>, co
   return food.status;
 }
 
-export function effectiveStatus(
-  food: Food,
-  condition: ConditionState,
-  summary?: ReactionSummary,
-): EffectiveStatus {
+export function effectiveStatus(food: Food, condition: ConditionState, summary?: ReactionSummary): EffectiveStatus {
   const personal = personalStatus(summary);
   if (personal) return { status: personal, source: 'personal' };
   const byCondition = conditionStatus(food, condition);
@@ -90,11 +86,6 @@ const collator = new Intl.Collator('ko');
 export function compareRanked(mode: SortMode) {
   return (a: RankedFood, b: RankedFood): number => {
     if (mode === 'name') return collator.compare(a.food.name, b.food.name);
-    return (
-      statusRank(a.status) - statusRank(b.status) ||
-      b.match - a.match ||
-      a.score - b.score ||
-      collator.compare(a.food.name, b.food.name)
-    );
+    return statusRank(a.status) - statusRank(b.status) || b.match - a.match || a.score - b.score || collator.compare(a.food.name, b.food.name);
   };
 }

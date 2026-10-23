@@ -9,16 +9,22 @@ import { foodId, variantId } from '../shared/ids';
 
 const q = (s: string) => `'${s.replace(/'/g, "''")}'`;
 
-const lines: string[] = [
-  '-- 자동 생성 파일: npm run db:seed:gen (원본: shared/food-data.ts)',
-  '-- 초기 분류는 참고 데이터이며 의학적으로 확정한 값이 아니다.',
-];
+const lines: string[] = ['-- 자동 생성 파일: npm run db:seed:gen (원본: shared/food-data.ts)', '-- 초기 분류는 참고 데이터이며 의학적으로 확정한 값이 아니다.'];
 
 FOOD_DATA.forEach((f, i) => {
   const id = foodId(f.name);
   lines.push(
     `INSERT INTO foods (id, name, form_category, cuisine, base_status, fat_level, spice_level, tags, description, sort_order) VALUES (${[
-      q(id), q(f.name), q(f.form), q(f.cuisine), q(f.status), f.fat, f.spice, q(JSON.stringify(f.tags)), q(f.description), i,
+      q(id),
+      q(f.name),
+      q(f.form),
+      q(f.cuisine),
+      q(f.status),
+      f.fat,
+      f.spice,
+      q(JSON.stringify(f.tags)),
+      q(f.description),
+      i,
     ].join(', ')});`,
   );
   for (const a of new Set(f.aliases)) {
@@ -27,7 +33,13 @@ FOOD_DATA.forEach((f, i) => {
   f.variants.forEach((v, j) => {
     lines.push(
       `INSERT INTO food_variants (id, food_id, name, status, fat_level, note, sort_order) VALUES (${[
-        q(variantId(f.name, v.name)), q(id), q(v.name), q(v.status), v.fat, q(v.note), j,
+        q(variantId(f.name, v.name)),
+        q(id),
+        q(v.name),
+        q(v.status),
+        v.fat,
+        q(v.note),
+        j,
       ].join(', ')});`,
     );
   });

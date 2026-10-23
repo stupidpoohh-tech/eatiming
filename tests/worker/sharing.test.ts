@@ -33,7 +33,9 @@ describe('초대', () => {
     const a = await signup('exp');
     const b = await signup('b');
     const inv = (await a.post('/invites', { permissions: allOff })).json;
-    await env.DB.prepare('UPDATE companion_invites SET expires_at = ? WHERE id = ?').bind(new Date(Date.now() - 1000).toISOString(), inv.id).run();
+    await env.DB.prepare('UPDATE companion_invites SET expires_at = ? WHERE id = ?')
+      .bind(new Date(Date.now() - 1000).toISOString(), inv.id)
+      .run();
     expect((await b.post(`/invites/${inv.token}/accept`)).status).toBe(410);
 
     const inv2 = (await a.post('/invites', { permissions: allOff })).json;

@@ -20,12 +20,7 @@ export interface IntervalProgress {
   daysPastDue: number;
 }
 
-export function intervalProgress(
-  lastTakenAt: Date | null,
-  intervalDays: number,
-  now: Date,
-  timeZone: string,
-): IntervalProgress {
+export function intervalProgress(lastTakenAt: Date | null, intervalDays: number, now: Date, timeZone: string): IntervalProgress {
   if (!lastTakenAt) {
     return { kind: 'interval', hasLog: false, lastTakenAt: null, dayIndex: 0, intervalDays, nextDueKey: null, pastDue: false, daysPastDue: 0 };
   }
@@ -63,13 +58,7 @@ export interface DailyProgress {
   todayKey: string;
 }
 
-export function dailyProgress(
-  takenTimes: Date[],
-  defaultTime: string | null,
-  effectHours: number | null,
-  now: Date,
-  timeZone: string,
-): DailyProgress {
+export function dailyProgress(takenTimes: Date[], defaultTime: string | null, effectHours: number | null, now: Date, timeZone: string): DailyProgress {
   const effectMs = (effectHours ?? 0) * 3_600_000;
   const todayKey = localDateKey(now, timeZone);
   const past = takenTimes.filter((t) => t.getTime() <= now.getTime()).sort((a, b) => b.getTime() - a.getTime());
@@ -110,10 +99,7 @@ export const PERCEIVED_LABEL: Record<PerceivedLevel, string> = {
   weakest: '가장 약함',
 };
 
-export function patternFor(
-  patterns: { dayOffset: number; level: PerceivedLevel }[],
-  dayIndex: number,
-): PerceivedLevel | null {
+export function patternFor(patterns: { dayOffset: number; level: PerceivedLevel }[], dayIndex: number): PerceivedLevel | null {
   return patterns.find((p) => p.dayOffset === dayIndex)?.level ?? null;
 }
 

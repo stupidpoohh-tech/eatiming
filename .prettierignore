@@ -1,0 +1,6 @@
+migrations
+worker-configuration.d.ts
+dist
+.wrangler
+test-results
+package-lock.json

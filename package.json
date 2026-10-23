@@ -15,7 +15,9 @@
     "test:unit": "vitest run --project unit",
     "test:worker": "vitest run --project worker",
     "test:e2e": "playwright test",
-    "deploy": "npm run build && wrangler d1 migrations apply eatiming --remote && wrangler deploy"
+    "deploy": "npm run build && wrangler d1 migrations apply eatiming --remote && wrangler deploy",
+    "e2e:server": "rm -rf .wrangler/e2e && wrangler d1 migrations apply eatiming --local --persist-to .wrangler/e2e && vite build && EATIMING_PERSIST_PATH=.wrangler/e2e vite preview --strictPort",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "@tanstack/react-query": "^5.104.5",

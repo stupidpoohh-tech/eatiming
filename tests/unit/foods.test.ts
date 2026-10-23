@@ -33,7 +33,10 @@ describe('초기 음식 데이터', () => {
 
   it('제공된 대표 항목이 포함되어 있다', () => {
     for (const n of ['삼겹살', '마카롱', '쉐이크', '오차즈케', '맑은 육수 샤브샤브', '이온음료', '전지방 요거트', '튀김 딤섬', '치즈 플래터']) {
-      expect(foods.some((f) => f.name === n), n).toBe(true);
+      expect(
+        foods.some((f) => f.name === n),
+        n,
+      ).toBe(true);
     }
   });
 });
@@ -48,9 +51,7 @@ describe('검색', () => {
   });
 
   it('부분 검색과 초성 검색', () => {
-    expect(names(explore(foods, index, q({ q: '칼국수' }), 'normal'))).toEqual(
-      expect.arrayContaining(['칼국수', '바지락칼국수', '해물칼국수']),
-    );
+    expect(names(explore(foods, index, q({ q: '칼국수' }), 'normal'))).toEqual(expect.arrayContaining(['칼국수', '바지락칼국수', '해물칼국수']));
     expect(names(explore(foods, index, q({ q: 'ㅅㄱㅅ' }), 'normal'))).toContain('삼겹살');
     expect(toChoseong('삼겹살')).toBe('ㅅㄱㅅ');
     expect(normalize(' 메밀 · 소바 ')).toBe('메밀소바');

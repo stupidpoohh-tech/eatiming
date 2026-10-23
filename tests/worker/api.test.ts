@@ -101,9 +101,17 @@ describe('약물 기록', () => {
     expect((await c.patch(`/logs/${logId}`, { takenAt: newTime })).status).toBe(200);
     expect((await c.get('/medications')).json.logs[0].takenAt).toBe(newTime);
 
-    await c.put(`/medications/${id}/patterns`, { patterns: [{ dayOffset: 1, level: 'strongest' }, { dayOffset: 6, level: 'weakest' }] });
+    await c.put(`/medications/${id}/patterns`, {
+      patterns: [
+        { dayOffset: 1, level: 'strongest' },
+        { dayOffset: 6, level: 'weakest' },
+      ],
+    });
     const med = (await c.get('/medications')).json.medications[0];
-    expect(med.patterns).toEqual([{ dayOffset: 1, level: 'strongest' }, { dayOffset: 6, level: 'weakest' }]);
+    expect(med.patterns).toEqual([
+      { dayOffset: 1, level: 'strongest' },
+      { dayOffset: 6, level: 'weakest' },
+    ]);
 
     expect((await c.del(`/logs/${logId}`)).status).toBe(200);
     expect((await c.get('/medications')).json.logs).toHaveLength(0);

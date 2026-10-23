@@ -24,9 +24,11 @@ interface MedRow {
 
 export async function loadMedications(db: D1Database, userId: string): Promise<Medication[]> {
   const [meds, patterns] = await db.batch([
-    db.prepare(
-      'SELECT id, name, schedule_type, interval_days, default_time, effect_hours, dose_label, sort_order FROM medications WHERE user_id = ? ORDER BY sort_order, created_at',
-    ).bind(userId),
+    db
+      .prepare(
+        'SELECT id, name, schedule_type, interval_days, default_time, effect_hours, dose_label, sort_order FROM medications WHERE user_id = ? ORDER BY sort_order, created_at',
+      )
+      .bind(userId),
     db.prepare('SELECT medication_id, day_offset, level FROM perceived_patterns WHERE user_id = ? ORDER BY day_offset').bind(userId),
   ]);
   const byMed = new Map<string, { dayOffset: number; level: PerceivedLevel }[]>();

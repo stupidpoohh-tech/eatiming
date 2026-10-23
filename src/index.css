@@ -1,0 +1,117 @@
+@import 'tailwindcss';
+@import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
+
+/* EATIMING 디자인 토큰 — 화이트·아이보리 기반, 세이지 그린·소프트 블루 보조 */
+@theme {
+  --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
+
+  --color-ivory: #fbf8f2;
+  --color-ivory-deep: #f3eee4;
+  --color-line: #e7e1d5;
+  --color-ink: #1f2a24;
+  --color-ink-soft: #55615a;
+  --color-ink-mute: #8a938d;
+
+  --color-sage-50: #f1f6f2;
+  --color-sage-100: #e1ece4;
+  --color-sage-200: #c4dacb;
+  --color-sage-400: #7fa58b;
+  --color-sage-500: #5f8c6e;
+  --color-sage-600: #4f7a5e;
+  --color-sage-700: #3d6149;
+
+  --color-sky-50: #eff5fb;
+  --color-sky-100: #dde9f6;
+  --color-sky-300: #9cc3e6;
+  --color-sky-500: #5b8fc4;
+  --color-sky-700: #3b6894;
+
+  --color-honey-50: #fbf4e6;
+  --color-honey-100: #f5e6c6;
+  --color-honey-500: #b9862c;
+  --color-honey-700: #8a6119;
+
+  --color-clay-50: #fbefec;
+  --color-clay-100: #f4d9d2;
+  --color-clay-500: #b9604f;
+  --color-clay-700: #8f4436;
+
+  --radius-chip: 14px;
+  --shadow-soft: 0 1px 2px rgb(31 42 36 / 0.04), 0 4px 16px rgb(31 42 36 / 0.06);
+  --shadow-sheet: 0 -8px 32px rgb(31 42 36 / 0.12);
+
+  --animate-sheet-in: sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
+  --animate-fade-in: fade-in 180ms ease-out;
+
+  @keyframes sheet-in {
+    from {
+      transform: translateY(24px);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-ivory text-ink font-sans antialiased;
+    word-break: keep-all;
+  }
+  :focus-visible {
+    outline: 2px solid var(--color-sky-500);
+    outline-offset: 2px;
+  }
+  button {
+    cursor: pointer;
+  }
+  button:disabled {
+    cursor: default;
+  }
+}
+
+@utility scrollbar-none {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@utility tap {
+  transition:
+    transform 120ms ease,
+    background-color 120ms ease,
+    border-color 120ms ease;
+  &:active:not(:disabled) {
+    transform: scale(0.97);
+  }
+}
+
+/* 수백 개의 음식 칩: 화면 밖 칩의 렌더링 비용을 줄인다 */
+@utility food-chip {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 52px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}

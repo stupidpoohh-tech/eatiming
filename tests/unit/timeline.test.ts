@@ -55,7 +55,10 @@ describe('마운자로(주기 투여) 타임라인', () => {
   });
 
   it('개인 체감 패턴은 해당 일차에만 표시된다', () => {
-    const patterns = [{ dayOffset: 1, level: 'strongest' as const }, { dayOffset: 6, level: 'weakest' as const }];
+    const patterns = [
+      { dayOffset: 1, level: 'strongest' as const },
+      { dayOffset: 6, level: 'weakest' as const },
+    ];
     expect(patternFor(patterns, 1)).toBe('strongest');
     expect(patternFor(patterns, 6)).toBe('weakest');
     expect(patternFor(patterns, 3)).toBeNull();

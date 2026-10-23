@@ -97,9 +97,7 @@ export async function buildSharedView(db: D1Database, share: ShareRow): Promise<
 
 async function inviteByToken(db: D1Database, token: string) {
   return db
-    .prepare(
-      `SELECT i.*, u.display_name AS owner_name FROM companion_invites i JOIN users u ON u.id = i.owner_id WHERE i.token_hash = ?`,
-    )
+    .prepare(`SELECT i.*, u.display_name AS owner_name FROM companion_invites i JOIN users u ON u.id = i.owner_id WHERE i.token_hash = ?`)
     .bind(await sha256(token))
     .first<PermRow & { id: string; owner_id: string; owner_name: string; expires_at: string; accepted_at: string | null; revoked_at: string | null }>();
 }
@@ -132,17 +130,23 @@ export const shareRoutes = new Hono<AppEnv>()
     const user = c.get('user');
     const db = c.env.DB;
     const [outgoing, incoming, invites] = await db.batch([
-      db.prepare(
-        `SELECT s.*, u.display_name AS other_name, u.email AS other_email FROM shares s JOIN users u ON u.id = s.viewer_id
+      db
+        .prepare(
+          `SELECT s.*, u.display_name AS other_name, u.email AS other_email FROM shares s JOIN users u ON u.id = s.viewer_id
          WHERE s.owner_id = ? ORDER BY s.created_at`,
-      ).bind(user.id),
-      db.prepare(
-        `SELECT s.*, u.display_name AS other_name FROM shares s JOIN users u ON u.id = s.owner_id
+        )
+        .bind(user.id),
+      db
+        .prepare(
+          `SELECT s.*, u.display_name AS other_name FROM shares s JOIN users u ON u.id = s.owner_id
          WHERE s.viewer_id = ? ORDER BY s.created_at`,
-      ).bind(user.id),
-      db.prepare(
-        `SELECT * FROM companion_invites WHERE owner_id = ? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at > ? ORDER BY created_at DESC`,
-      ).bind(user.id, nowIso()),
+        )
+        .bind(user.id),
+      db
+        .prepare(
+          `SELECT * FROM companion_invites WHERE owner_id = ? AND accepted_at IS NULL AND revoked_at IS NULL AND expires_at > ? ORDER BY created_at DESC`,
+        )
+        .bind(user.id, nowIso()),
     ]);
     type Row = ShareRow & { other_name: string; other_email?: string; created_at: string };
     return c.json({
@@ -207,7 +211,9 @@ export const shareRoutes = new Hono<AppEnv>()
     if (inv.owner_id === user.id) fail(400, '본인이 만든 초대는 수락할 수 없습니다.');
     const now = nowIso();
     // 1회용 보장: 아직 수락되지 않은 경우에만 갱신
-    const claim = await c.env.DB.prepare('UPDATE companion_invites SET accepted_by = ?, accepted_at = ? WHERE id = ? AND accepted_at IS NULL AND revoked_at IS NULL')
+    const claim = await c.env.DB.prepare(
+      'UPDATE companion_invites SET accepted_by = ?, accepted_at = ? WHERE id = ? AND accepted_at IS NULL AND revoked_at IS NULL',
+    )
       .bind(user.id, now, inv.id)
       .run();
     if (!claim.meta.changes) fail(410, '이미 사용된 초대 링크입니다.');

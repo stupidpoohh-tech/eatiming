@@ -26,10 +26,7 @@ export const conditionRoutes = new Hono<AppEnv>()
   .use(requireUser)
   .get('/', async (c) => c.json({ condition: await loadCondition(c.env.DB, c.get('user').id) }))
   .put('/', async (c) => {
-    const body = await parseBody(
-      c,
-      z.object({ state: conditionState, symptoms: z.array(z.string().max(30)).max(20).optional() }),
-    );
+    const body = await parseBody(c, z.object({ state: conditionState, symptoms: z.array(z.string().max(30)).max(20).optional() }));
     const user = c.get('user');
     const now = nowIso();
     await c.env.DB.prepare(
@@ -53,9 +50,7 @@ const medBase = z.object({
 });
 
 const patternSchema = z.object({
-  patterns: z
-    .array(z.object({ dayOffset: z.number().int().min(0).max(60), level: z.enum(['strongest', 'strong', 'normal', 'weak', 'weakest']) }))
-    .max(61),
+  patterns: z.array(z.object({ dayOffset: z.number().int().min(0).max(60), level: z.enum(['strongest', 'strong', 'normal', 'weak', 'weakest']) })).max(61),
 });
 
 const logSchema = z.object({
@@ -276,10 +271,7 @@ export const reactionRoutes = new Hono<AppEnv>()
     const user = c.get('user');
     await checkVariant(c.env.DB, body.foodId, body.variantId);
     const eatenAt = body.eatenAt ? notFuture(body.eatenAt) : nowIso();
-    const [ctx, condition] = await Promise.all([
-      medicationContext(c.env.DB, user.id, user.timezone, new Date(eatenAt)),
-      loadCondition(c.env.DB, user.id),
-    ]);
+    const [ctx, condition] = await Promise.all([medicationContext(c.env.DB, user.id, user.timezone, new Date(eatenAt)), loadCondition(c.env.DB, user.id)]);
     const id = newId();
     const now = nowIso();
     await c.env.DB.prepare(
@@ -295,9 +287,7 @@ export const reactionRoutes = new Hono<AppEnv>()
     const body = await parseBody(c, reactionSchema.omit({ foodId: true }).partial());
     const user = c.get('user');
     const id = c.req.param('id');
-    const existing = await c.env.DB.prepare('SELECT food_id FROM food_reactions WHERE id = ? AND user_id = ?')
-      .bind(id, user.id)
-      .first<{ food_id: string }>();
+    const existing = await c.env.DB.prepare('SELECT food_id FROM food_reactions WHERE id = ? AND user_id = ?').bind(id, user.id).first<{ food_id: string }>();
     if (!existing) fail(404, '기록을 찾을 수 없습니다.');
     if (body.variantId) await checkVariant(c.env.DB, existing.food_id, body.variantId);
     const eatenAt = body.eatenAt ? notFuture(body.eatenAt) : null;
