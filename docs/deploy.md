@@ -38,7 +38,7 @@ Durable Object(`ShareHub`)는 `wrangler.jsonc`의 `migrations`(v1, SQLite 클래
 ## 배포 후 확인
 
 - `GET /api/health` → `{"ok":true}`
-- 비로그인 상태로 메뉴 탐색 화면에서 198개 음식 표시
+- 비로그인 상태로 메뉴 탐색 화면에서 262개 음식 표시
 - 계정 2개로 초대 → 수락 → 컨디션 변경이 새로고침 없이 반영되는지 확인
 
 ## 음식 데이터 변경 시
