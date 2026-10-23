@@ -20,5 +20,10 @@
   "durable_objects": {
     "bindings": [{ "name": "SHARE_HUB", "class_name": "ShareHub" }]
   },
+  "previews": {
+    "durable_objects": {
+      "bindings": [{ "name": "SHARE_HUB", "class_name": "ShareHub" }]
+    }
+  },
   "migrations": [{ "tag": "v1", "new_sqlite_classes": ["ShareHub"] }]
 }

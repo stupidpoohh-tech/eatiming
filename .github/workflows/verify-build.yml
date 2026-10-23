@@ -1,0 +1,23 @@
+name: Verify EATIMING build
+on:
+  push:
+    branches:
+      - 'fix/cloudflare-build-*'
+  pull_request:
+    branches:
+      - 'claude/dazzling-clarke-la7y2g'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 12
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm run build
