@@ -26,8 +26,8 @@ function IntervalDots({ dayIndex, intervalDays, pastDue }: { dayIndex: number; i
   if (intervalDays > 14) {
     const ratio = Math.min(1, dayIndex / intervalDays);
     return (
-      <div className="h-2 w-full overflow-hidden rounded-full bg-sky-100" aria-hidden>
-        <div className="h-full rounded-full bg-sky-500" style={{ width: `${ratio * 100}%` }} />
+      <div className="h-2 w-full overflow-hidden rounded-full bg-accent-100" aria-hidden>
+        <div className="h-full rounded-full bg-accent-500" style={{ width: `${ratio * 100}%` }} />
       </div>
     );
   }
@@ -41,14 +41,14 @@ function IntervalDots({ dayIndex, intervalDays, pastDue }: { dayIndex: number; i
             <span
               className={cx(
                 'flex items-center justify-center rounded-full text-[10px] font-bold tabular-nums',
-                current ? 'size-6 bg-sky-500 text-white ring-4 ring-sky-100' : 'size-4',
-                !current && done && 'bg-sky-300 text-white',
+                current ? 'size-6 bg-accent-500 text-white ring-4 ring-accent-100' : 'size-4',
+                !current && done && 'bg-accent-300 text-white',
                 !current && !done && 'border border-line bg-white text-ink-mute',
               )}
             >
               {current ? `D${d}` : ''}
             </span>
-            {d < intervalDays - 1 && <span className={cx('h-0.5 flex-1', done ? 'bg-sky-300' : 'bg-line')} />}
+            {d < intervalDays - 1 && <span className={cx('h-0.5 flex-1', done ? 'bg-accent-300' : 'bg-line')} />}
           </li>
         );
       })}
@@ -71,10 +71,10 @@ export function IntervalTimeline({ med, now, tz, compact }: { med: MedView; now:
         ) : p.pastDue ? (
           <span className="text-sm font-semibold text-honey-700">예정일 경과 · 마지막 투여 후 {p.dayIndex}일</span>
         ) : (
-          <span className="text-sm font-semibold text-sky-700">투여 후 {p.dayIndex === 0 ? '당일' : `${p.dayIndex}일차`}</span>
+          <span className="text-sm font-semibold text-accent-700">투여 후 {p.dayIndex === 0 ? '당일' : `${p.dayIndex}일차`}</span>
         )}
         {perceived && (
-          <span className="rounded-full bg-sky-50 px-2 py-0.5 text-xs font-medium text-sky-700">내 체감: 식욕 억제 {PERCEIVED_LABEL[perceived]}</span>
+          <span className="rounded-full bg-accent-50 px-2 py-0.5 text-xs font-medium text-accent-700">내 체감: 식욕 억제 {PERCEIVED_LABEL[perceived]}</span>
         )}
       </div>
       {p.hasLog && <IntervalDots dayIndex={p.dayIndex} intervalDays={interval} pastDue={p.pastDue} />}
@@ -114,7 +114,7 @@ export function DailyTimeline({
         {p.state === 'not_taken' ? (
           <span className="text-sm text-ink-mute">오늘 복용 확인 전</span>
         ) : (
-          <span className="inline-flex items-center gap-1 text-sm font-semibold text-sage-700">
+          <span className="inline-flex items-center gap-1 text-sm font-semibold text-brand-700">
             <CheckCircle2 size={14} aria-hidden />
             {takenOtherDay ? '어제 ' : ''}
             {formatTime(p.takenAt!, tz)} 복용 확인
@@ -125,7 +125,7 @@ export function DailyTimeline({
             type="button"
             onClick={onConfirm}
             disabled={confirming}
-            className="tap ml-auto inline-flex h-9 items-center gap-1 rounded-full bg-sage-600 px-3.5 text-sm font-semibold text-white disabled:bg-sage-200"
+            className="tap ml-auto inline-flex h-9 items-center gap-1 rounded-full bg-brand-600 px-3.5 text-sm font-semibold text-white disabled:bg-brand-200"
           >
             <CheckCircle2 size={15} aria-hidden />
             {p.defaultToday && p.defaultPassed ? `${med.defaultTime} 복용 확인` : '지금 복용 확인'}
@@ -136,7 +136,7 @@ export function DailyTimeline({
       {p.state === 'not_taken' ? (
         p.defaultToday && p.defaultTodayEnd ? (
           <div>
-            <div className="h-2 w-full rounded-full border border-dashed border-sky-300" aria-hidden />
+            <div className="h-2 w-full rounded-full border border-dashed border-accent-300" aria-hidden />
             <p className="mt-1 text-xs text-ink-mute">
               기본값 {formatTime(p.defaultToday, tz)} 복용 시 예상 작용 구간 {formatTime(p.defaultToday, tz)}–{formatTime(p.defaultTodayEnd, tz)} (복용 확인
               전이라 표시만 합니다)
@@ -145,8 +145,8 @@ export function DailyTimeline({
         ) : null
       ) : p.windowEnd ? (
         <div>
-          <div className="h-2 w-full overflow-hidden rounded-full bg-sky-100" aria-hidden>
-            <div className="h-full rounded-full bg-sky-500 transition-[width] duration-700" style={{ width: `${p.elapsedRatio * 100}%` }} />
+          <div className="h-2 w-full overflow-hidden rounded-full bg-accent-100" aria-hidden>
+            <div className="h-full rounded-full bg-accent-500 transition-[width] duration-700" style={{ width: `${p.elapsedRatio * 100}%` }} />
           </div>
           <div className="mt-1 flex justify-between text-xs text-ink-soft tabular-nums">
             <span>{formatTime(p.windowStart!, tz)} 복용</span>
