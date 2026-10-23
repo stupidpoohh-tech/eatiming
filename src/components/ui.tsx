@@ -10,7 +10,7 @@ export function cx(...parts: (string | false | null | undefined)[]) {
 
 // ───────── 상태 아이콘: 색상 + 모양 + (스크린리더) 텍스트 ─────────
 const STATUS_STYLE: Record<FoodStatus, string> = {
-  easy: 'bg-sage-100 text-sage-700',
+  easy: 'bg-brand-100 text-brand-700',
   depends: 'bg-honey-100 text-honey-700',
   heavy: 'bg-clay-100 text-clay-700',
 };
@@ -39,8 +39,8 @@ export function StatusBadge({ status, label }: { status: FoodStatus; label?: str
 // ───────── 버튼 ─────────
 type Variant = 'primary' | 'secondary' | 'ghost' | 'danger';
 const VARIANT: Record<Variant, string> = {
-  primary: 'bg-sage-600 text-white hover:bg-sage-700 disabled:bg-sage-200',
-  secondary: 'bg-white text-ink border border-line hover:border-sage-400 disabled:text-ink-mute',
+  primary: 'bg-brand-600 text-white hover:bg-brand-700 disabled:bg-brand-200',
+  secondary: 'bg-white text-ink border border-line hover:border-brand-400 disabled:text-ink-mute',
   ghost: 'text-ink-soft hover:bg-ivory-deep',
   danger: 'bg-white text-clay-700 border border-clay-100 hover:bg-clay-50',
 };
@@ -55,7 +55,7 @@ export function Button({
   return (
     <button
       type="button"
-      className={cx('tap inline-flex items-center justify-center gap-1.5 rounded-xl font-semibold', sz, VARIANT[variant], className)}
+      className={cx('tap inline-flex items-center justify-center gap-1.5 rounded-[12px] font-semibold shadow-[0_1px_2px_rgb(25_38_59_/_0.035)]', sz, VARIANT[variant], className)}
       {...props}
     />
   );
@@ -136,7 +136,7 @@ export function Field({ label, hint, children }: { label: string; hint?: ReactNo
 }
 
 export const inputClass =
-  'h-11 w-full rounded-xl border border-line bg-white px-3 text-[16px] text-ink placeholder:text-ink-mute focus:border-sage-400 focus:outline-none';
+  'h-11 w-full rounded-xl border border-line bg-white px-3 text-[16px] text-ink placeholder:text-ink-mute focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100';
 
 export function Switch({
   checked,
@@ -160,20 +160,20 @@ export function Switch({
       <input type="checkbox" className="peer sr-only" checked={checked} disabled={disabled} onChange={(e) => onChange(e.target.checked)} />
       <span
         aria-hidden
-        className="relative h-7 w-12 shrink-0 rounded-full bg-line transition-colors peer-checked:bg-sage-500 peer-focus-visible:outline-2 peer-focus-visible:outline-sky-500 after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5"
+        className="relative h-7 w-12 shrink-0 rounded-full bg-line transition-colors peer-checked:bg-brand-500 peer-focus-visible:outline-2 peer-focus-visible:outline-accent-500 after:absolute after:top-1 after:left-1 after:size-5 after:rounded-full after:bg-white after:shadow after:transition-transform peer-checked:after:translate-x-5"
       />
     </label>
   );
 }
 
 export function Card({ className, children }: { className?: string; children: ReactNode }) {
-  return <section className={cx('rounded-2xl border border-line bg-white p-4', className)}>{children}</section>;
+  return <section className={cx('rounded-[20px] border border-line bg-white p-4 shadow-[var(--shadow-soft)] sm:p-5', className)}>{children}</section>;
 }
 
 export function Spinner({ label = '불러오는 중' }: { label?: string }) {
   return (
     <div className="flex items-center justify-center gap-2 py-10 text-sm text-ink-mute" role="status">
-      <span className="size-4 animate-spin rounded-full border-2 border-sage-200 border-t-sage-600" aria-hidden />
+      <span className="size-4 animate-spin rounded-full border-2 border-brand-200 border-t-brand-600" aria-hidden />
       {label}
     </div>
   );

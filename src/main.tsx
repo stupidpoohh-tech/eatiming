@@ -45,7 +45,7 @@ function NotFound() {
   return (
     <div className="pt-10 text-center">
       <p className="font-semibold">페이지를 찾을 수 없어요</p>
-      <Link to="/" className="mt-2 inline-block text-sage-700 underline">
+      <Link to="/" className="mt-2 inline-block text-brand-700 underline">
         메뉴 탐색으로 가기
       </Link>
     </div>

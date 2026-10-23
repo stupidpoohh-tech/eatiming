@@ -27,8 +27,8 @@ export function SharedViewPanel({ view }: { view: SharedView }) {
     <div className="space-y-3" data-testid="shared-view">
       {nothing && <p className="text-sm text-ink-mute">공유 중인 항목이 없습니다.</p>}
       {p.shareCondition && (
-        <div className="rounded-xl bg-sage-50 px-3.5 py-3">
-          <p className="text-xs font-semibold text-sage-700">지금 식사 컨디션</p>
+        <div className="rounded-xl bg-brand-50 px-3.5 py-3">
+          <p className="text-xs font-semibold text-brand-700">지금 식사 컨디션</p>
           <p className="mt-0.5 text-lg font-bold" data-testid="shared-condition">
             {view.condition ? CONDITION_LABEL[view.condition.state] : '–'}
           </p>
@@ -36,8 +36,8 @@ export function SharedViewPanel({ view }: { view: SharedView }) {
         </div>
       )}
       {view.medications && (
-        <div className="space-y-3 rounded-xl bg-sky-50 px-3.5 py-3" data-testid="shared-meds">
-          <p className="text-xs font-semibold text-sky-700">{p.shareMedProgress ? '투여 경과' : '등록 약물 및 복용 시간'}</p>
+        <div className="space-y-3 rounded-xl bg-accent-50 px-3.5 py-3" data-testid="shared-meds">
+          <p className="text-xs font-semibold text-accent-700">{p.shareMedProgress ? '투여 경과' : '등록 약물 및 복용 시간'}</p>
           {view.medications.length === 0 && <p className="text-sm text-ink-mute">등록된 약물이 없습니다.</p>}
           {sharedMedViews(view.medications).map((m, i) => {
             const sched = view.medications![i].schedule;
@@ -65,7 +65,7 @@ export function SharedViewPanel({ view }: { view: SharedView }) {
             <div className="mt-1.5 space-y-1.5 text-sm">
               {comfy.length > 0 && (
                 <p>
-                  <span className="font-semibold text-sage-700">{REACTION_LABEL.good}</span> · {comfy.map((s) => foodName.get(s.foodId) ?? '').join(', ')}
+                  <span className="font-semibold text-brand-700">{REACTION_LABEL.good}</span> · {comfy.map((s) => foodName.get(s.foodId) ?? '').join(', ')}
                 </p>
               )}
               {uneasy.length > 0 && (

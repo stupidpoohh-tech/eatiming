@@ -34,9 +34,9 @@ function TogetherContent({ user }: { user: User }) {
   if (shares.error) return <ErrorState message={errorMessage(shares.error)} onRetry={() => shares.refetch()} />;
   const data = shares.data!;
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 pt-2">
       <div className="pt-1">
-        <h1 className="text-xl font-extrabold">함께 보기</h1>
+        <h1 className="text-2xl font-extrabold tracking-tight">함께 보기</h1>
         <p className="text-sm text-ink-mute">가족이나 연인과 지금 상태를 공유하고, 같은 메뉴 목록을 함께 볼 수 있어요.</p>
       </div>
 
@@ -71,7 +71,7 @@ function LiveBadge({ status }: { status: RealtimeStatus }) {
     <span
       className={cx(
         'inline-flex items-center gap-1 rounded-full px-2 py-0.5 text-[11px] font-semibold',
-        status === 'live' ? 'bg-sage-100 text-sage-700' : 'bg-ivory-deep text-ink-mute',
+        status === 'live' ? 'bg-brand-100 text-brand-700' : 'bg-ivory-deep text-ink-mute',
       )}
     >
       <Radio size={12} aria-hidden className={status === 'live' ? 'animate-pulse' : ''} />
@@ -249,8 +249,8 @@ function InviteCard({ invites }: { invites: SharesData['invites'] }) {
         <p className="text-sm text-ink-mute">공유할 항목을 고른 뒤 초대 링크를 보내세요. 링크는 72시간 동안 한 번만 사용할 수 있어요.</p>
       </div>
       {link ? (
-        <div className="space-y-2 rounded-xl bg-sage-50 p-3">
-          <p className="flex items-center gap-1.5 text-sm font-semibold text-sage-700">
+        <div className="space-y-2 rounded-xl bg-brand-50 p-3">
+          <p className="flex items-center gap-1.5 text-sm font-semibold text-brand-700">
             <Link2 size={16} aria-hidden /> 초대 링크가 만들어졌어요
           </p>
           <input
@@ -275,7 +275,7 @@ function InviteCard({ invites }: { invites: SharesData['invites'] }) {
         <>
           <PermissionSwitches value={permissions} onChange={setPermissions} />
           <label className="flex items-start gap-2 rounded-xl bg-ivory p-3 text-sm">
-            <input type="checkbox" className="mt-0.5 size-5 accent-sage-600" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
+            <input type="checkbox" className="mt-0.5 size-5 accent-brand-600" checked={agreed} onChange={(e) => setAgreed(e.target.checked)} />
             <span>
               선택한 항목을 초대를 수락한 사람에게 공유하는 데 동의합니다.
               {sensitive && (

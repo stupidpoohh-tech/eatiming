@@ -56,7 +56,7 @@ export function InvitePage() {
             <div className="flex gap-2">
               <Link
                 to={`/login?next=${next}`}
-                className="tap inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-sage-600 font-semibold text-white"
+                className="tap inline-flex h-11 flex-1 items-center justify-center rounded-xl bg-brand-600 font-semibold text-white"
               >
                 로그인
               </Link>
@@ -77,7 +77,7 @@ export function InvitePage() {
             </p>
             <ul className="space-y-1.5 text-sm">
               {PERMISSION_ITEMS.filter((i) => data.permissions?.[i.key]).map((i) => (
-                <li key={i.key} className="rounded-lg bg-sage-50 px-3 py-2 text-sage-700">
+                <li key={i.key} className="rounded-lg bg-brand-50 px-3 py-2 text-brand-700">
                   {i.label}
                 </li>
               ))}
