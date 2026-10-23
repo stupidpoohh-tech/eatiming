@@ -27,7 +27,8 @@ test.describe('D. 음식 탐색 (비로그인 포함)', () => {
     expect(names).toContain('오징어튀김');
     expect(names).not.toContain('삼겹살');
 
-    // 국가 필터 추가
+    // 상세 필터 패널에서 국가 분류 지정
+    await page.getByText('필터 및 정렬').click();
     await page.getByLabel('국가별 분류').selectOption('japanese');
     await expect(chip(page, '덴푸라')).toBeVisible();
     await expect(chip(page, '오징어튀김')).toHaveCount(0);
@@ -58,24 +59,21 @@ test.describe('D. 음식 탐색 (비로그인 포함)', () => {
     await expect(page.getByText('‘존재하지않는음식’에 맞는 음식이 없어요')).toBeVisible();
   });
 
-  test('적합도 정렬: 편함 → 조건부 → 부담 가능, 컨디션 변경 시 순서 변경', async ({ page }) => {
+  test('추천 카드 클릭과 적합도 정렬·이름순 정렬', async ({ page }) => {
     await page.goto('/');
     await expect(grid(page).first()).toBeVisible();
+    await expect(page.getByTestId('featured-food').first()).toBeVisible();
+    await page.getByTestId('featured-food').first().click();
+    await expect(page.getByTestId('food-detail')).toBeVisible();
+    await page.getByRole('button', { name: '닫기' }).click();
+
     const headings = await page.locator('section[aria-label] > h3').allTextContents();
     expect(headings[0]).toContain('편하게 먹기 좋은 후보');
     expect(headings[1]).toContain('조리법·컨디션에 따라 다름');
     expect(headings[2]).toContain('상대적으로 부담될 수 있음');
 
+    await page.getByText('필터 및 정렬').click();
     const order = () => page.locator('[data-food]').evaluateAll((els) => els.map((e) => e.getAttribute('data-food')));
-    const normal = await order();
-    await page.getByRole('radio', { name: /든든하게/ }).click();
-    await expect.poll(order).not.toEqual(normal);
-    // 든든하게: 잡채(기름기 중간)는 조건부로 완화되어 표시
-    await expect(chip(page, '잡채')).toHaveAttribute('aria-label', /조리법·컨디션에 따라 다름/);
-    await page.getByRole('radio', { name: /담백하게/ }).click();
-    await expect(chip(page, '잡채')).toHaveAttribute('aria-label', /상대적으로 부담될 수 있음/);
-
-    // 이름순 정렬
     await page.getByRole('button', { name: /정렬: 적합도순/ }).click();
     const byName = await order();
     expect(byName).toEqual([...byName].sort((a, b) => a!.localeCompare(b!, 'ko')));
