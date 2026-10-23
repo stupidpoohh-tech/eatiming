@@ -138,7 +138,7 @@ function FoodDetail({
           </>
         ) : (
           <p className="text-sm text-ink-soft">
-            <Link to="/login" className="font-semibold text-sage-700 underline underline-offset-2">
+            <Link to="/login" className="font-semibold text-brand-700 underline underline-offset-2">
               로그인
             </Link>
             하면 먹어본 뒤의 반응을 기록하고 내 기준으로 정렬할 수 있어요.
@@ -166,8 +166,8 @@ function ReactionSummaryLine({ summary }: { summary: ReactionSummary }) {
 }
 
 const REACTION_STYLE: Record<ReactionKind, string> = {
-  good: 'border-sage-500 bg-sage-50 text-sage-700',
-  ok: 'border-sky-500 bg-sky-50 text-sky-700',
+  good: 'border-brand-500 bg-brand-50 text-brand-700',
+  ok: 'border-accent-500 bg-accent-50 text-accent-700',
   bad: 'border-clay-500 bg-clay-50 text-clay-700',
 };
 
