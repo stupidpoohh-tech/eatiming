@@ -21,6 +21,16 @@
 npm run deploy   # 빌드 → 원격 마이그레이션 → wrangler deploy
 ```
 
+### GitHub 연동 배포(Workers Builds)
+
+Cloudflare 대시보드 Workers & Pages > 생성 > Git 저장소 가져오기에서 이 저장소를 연결합니다.
+
+- 빌드 명령: `npm run build && npx wrangler d1 migrations apply eatiming --remote`
+- 배포 명령: `npx wrangler deploy`
+- 프로덕션 브랜치: 배포할 브랜치 이름
+
+Worker 이름은 `wrangler.jsonc`의 `name`(`eatiming`)과 같아야 합니다.
+
 배포 후 `https://eatiming.<계정 서브도메인>.workers.dev`에서 확인할 수 있습니다. 커스텀 도메인은 Cloudflare 대시보드 Workers > 설정 > 도메인에서 연결합니다.
 
 Durable Object(`ShareHub`)는 `wrangler.jsonc`의 `migrations`(v1, SQLite 클래스)로 첫 배포 시 자동 생성됩니다.

@@ -13,8 +13,7 @@
     {
       "binding": "DB",
       "database_name": "eatiming",
-      // 배포 전 `wrangler d1 create eatiming` 결과의 database_id로 교체합니다.
-      "database_id": "00000000-0000-0000-0000-000000000000",
+      "database_id": "d64fea2c-3ae6-4593-aef0-43e0b951812c",
       "migrations_dir": "migrations"
     }
   ],
