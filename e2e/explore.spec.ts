@@ -8,8 +8,8 @@ test.describe('D. 음식 탐색 (비로그인 포함)', () => {
   test('검색·별칭·띄어쓰기, 카테고리·국가 복합 필터, 상태 필터 개수', async ({ page }) => {
     await page.goto('/');
     await expect(grid(page).first()).toBeVisible();
-    await expect(page.locator('[data-food]')).toHaveCount(198);
-    await expect(page.getByTestId('count-all')).toHaveText('198');
+    await expect(page.locator('[data-food]')).toHaveCount(262);
+    await expect(page.getByTestId('count-all')).toHaveText('262');
 
     const search = page.getByLabel('음식 검색');
     for (const term of ['모밀', '소바', '메밀 소바']) {
@@ -101,7 +101,7 @@ test.describe('D. 음식 탐색 (비로그인 포함)', () => {
 
   test('수백 개 음식 표시·검색 성능', async ({ page }) => {
     await page.goto('/');
-    await expect(page.locator('[data-food]')).toHaveCount(198);
+    await expect(page.locator('[data-food]')).toHaveCount(262);
     const ms = await page.evaluate(async () => {
       const input = document.querySelector<HTMLInputElement>('input[aria-label="음식 검색"]')!;
       const setter = Object.getOwnPropertyDescriptor(HTMLInputElement.prototype, 'value')!.set!;

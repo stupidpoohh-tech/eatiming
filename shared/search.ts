@@ -25,14 +25,19 @@ export interface SearchIndexEntry {
   names: string[];
   choseong: string[];
   tags: string[];
+  variantNames: string[];
+  variantChoseong: string[];
 }
 
-export function buildSearchEntry(food: { name: string; aliases: string[]; tags: string[] }): SearchIndexEntry {
+export function buildSearchEntry(food: { name: string; aliases: string[]; tags: string[]; variants?: { name: string }[] }): SearchIndexEntry {
   const names = [food.name, ...food.aliases].map(normalize);
+  const variantNames = (food.variants ?? []).map((v) => normalize(v.name));
   return {
     names,
     choseong: names.map(toChoseong),
     tags: food.tags.map(normalize),
+    variantNames,
+    variantChoseong: variantNames.map(toChoseong),
   };
 }
 
@@ -41,10 +46,11 @@ export function matchScore(entry: SearchIndexEntry, query: string): number {
   const q = normalize(query);
   if (!q) return 3;
   if (CHOSEONG_ONLY.test(q)) {
-    return entry.choseong.some((c) => c.includes(q)) ? 2 : 0;
+    return entry.choseong.some((c) => c.includes(q)) || entry.variantChoseong.some((c) => c.includes(q)) ? 2 : 0;
   }
   if (entry.names[0].startsWith(q)) return 3;
   if (entry.names.some((n) => n.includes(q))) return 2;
+  if (entry.variantNames.some((n) => n.includes(q))) return 2;
   if (entry.tags.some((t) => t === q || t.startsWith(q))) return 1;
   return 0;
 }

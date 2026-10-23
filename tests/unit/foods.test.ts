@@ -19,7 +19,7 @@ describe('초기 음식 데이터', () => {
   it('중복 없이 모든 항목이 등록되어 있다', () => {
     expect(new Set(foods.map((f) => f.name)).size).toBe(foods.length);
     expect(new Set(foods.map((f) => f.id)).size).toBe(foods.length);
-    expect(foods.length).toBe(198);
+    expect(foods.length).toBe(262);
   });
 
   it('별칭이 다른 음식 이름과 겹치지 않는다', () => {
@@ -55,6 +55,14 @@ describe('검색', () => {
     expect(names(explore(foods, index, q({ q: 'ㅅㄱㅅ' }), 'normal'))).toContain('삼겹살');
     expect(toChoseong('삼겹살')).toBe('ㅅㄱㅅ');
     expect(normalize(' 메밀 · 소바 ')).toBe('메밀소바');
+  });
+
+  it('신규 생활 음식과 조리법 검색을 지원한다', () => {
+    for (const [term, target] of [['된장찌개', '된장찌개'], ['마라탕', '마라탕'], ['샌드위치', '샌드위치'], ['장칼국수', '칼국수'], ['참치마요', '김밥'], ['마요·오일·아보카도 듬뿍', '포케']] as const) {
+      expect(names(explore(foods, index, q({ q: term }), 'normal')), term).toContain(target);
+    }
+    expect(foods.find((f) => f.name === '삼각김밥')?.status).toBe('depends');
+    expect(foods.find((f) => f.name === '저유분 토마토 파스타')?.aliases).not.toContain('토마토 파스타');
   });
 
   it('결과가 없으면 빈 목록', () => {
