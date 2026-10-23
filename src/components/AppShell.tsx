@@ -6,16 +6,16 @@ import { cx } from './ui';
 
 export function Logo() {
   return (
-    <Link to="/" className="inline-flex items-center gap-2" aria-label="잇타이밍 홈">
-      <svg viewBox="0 0 64 64" className="size-8" aria-hidden>
-        <rect width="64" height="64" rx="16" fill="#4F7A5E" />
-        <circle cx="32" cy="34" r="17" fill="none" stroke="#FBF8F2" strokeWidth="5" />
-        <path d="M32 22v12l8 5" fill="none" stroke="#FBF8F2" strokeWidth="5" strokeLinecap="round" />
-        <circle cx="32" cy="10" r="4" fill="#9CC3E6" />
+    <Link to="/" className="inline-flex items-center gap-2.5" aria-label="잇타이밍 홈">
+      <svg viewBox="0 0 64 64" className="size-9" aria-hidden>
+        <rect width="64" height="64" rx="16" fill="#D86424" />
+        <circle cx="32" cy="34" r="17" fill="none" stroke="#FFFFFF" strokeWidth="5" />
+        <path d="M32 22v12l8 5" fill="none" stroke="#FFFFFF" strokeWidth="5" strokeLinecap="round" />
+        <circle cx="32" cy="10" r="4" fill="#F8C09A" />
       </svg>
       <span className="leading-none">
-        <span className="block text-[17px] font-extrabold tracking-[0.08em] text-sage-700">EATIMING</span>
-        <span className="block text-[10px] font-medium text-ink-mute">내 몸의 타이밍에 맞는 한 끼</span>
+        <span className="block text-[18px] font-extrabold tracking-[0.045em] text-ink">EATIMING</span>
+        <span className="block text-[10px] font-medium text-ink-soft">내 몸의 타이밍에 맞는 한 끼</span>
       </span>
     </Link>
   );
@@ -31,7 +31,7 @@ export function AppShell({ children }: { children: ReactNode }) {
   const me = useMe();
   return (
     <div className="mx-auto min-h-dvh max-w-5xl">
-      <header className="flex items-center justify-between px-4 pt-[max(12px,env(safe-area-inset-top))] pb-2 md:px-6">
+      <header className="flex items-center justify-between px-4 pt-[max(12px,env(safe-area-inset-top))] pb-3 md:px-6">
         <Logo />
         <nav className="hidden items-center gap-1 md:flex" aria-label="주요 메뉴">
           {NAV.map((n) => (
@@ -40,7 +40,7 @@ export function AppShell({ children }: { children: ReactNode }) {
               to={n.to}
               end={n.end}
               className={({ isActive }) =>
-                cx('tap rounded-full px-4 py-2 text-sm font-semibold', isActive ? 'bg-sage-100 text-sage-700' : 'text-ink-soft hover:bg-ivory-deep')
+                cx('tap rounded-full px-4 py-2 text-sm font-semibold', isActive ? 'bg-brand-100 text-brand-700' : 'text-ink-soft hover:bg-ivory-deep')
               }
             >
               {n.label}
@@ -57,7 +57,7 @@ export function AppShell({ children }: { children: ReactNode }) {
       </header>
       <main className="px-4 pb-28 md:px-6 md:pb-12">{children}</main>
       <nav
-        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
+        className="fixed inset-x-0 bottom-0 z-40 border-t border-line bg-white/95 shadow-[0_-5px_20px_rgb(25_38_59_/_0.035)] pb-[env(safe-area-inset-bottom)] backdrop-blur md:hidden"
         aria-label="하단 메뉴"
       >
         <ul className="mx-auto flex max-w-md">
@@ -67,12 +67,12 @@ export function AppShell({ children }: { children: ReactNode }) {
                 to={n.to}
                 end={n.end}
                 className={({ isActive }) =>
-                  cx('tap flex h-16 flex-col items-center justify-center gap-1 text-[12px] font-semibold', isActive ? 'text-sage-700' : 'text-ink-mute')
+                  cx('tap flex h-16 flex-col items-center justify-center gap-1 text-[12px] font-semibold', isActive ? 'text-brand-700' : 'text-ink-mute')
                 }
               >
                 {({ isActive }) => (
                   <>
-                    <span className={cx('flex h-7 w-12 items-center justify-center rounded-full', isActive && 'bg-sage-100')}>
+                    <span className={cx('flex h-7 w-12 items-center justify-center rounded-full', isActive && 'bg-brand-50')}>
                       <n.icon size={20} aria-hidden />
                     </span>
                     {n.label}
