@@ -874,7 +874,7 @@ const entries: Entry[] = [
       {
         "name": "시럽·크림 또는 양 많이",
         "status": "depends",
-        "fat": "1",
+        "fat": 1,
         "note": "첨가물과 음용량에 따라 다를 수 있습니다."
       }
     ],
@@ -902,7 +902,7 @@ const entries: Entry[] = [
       {
         "name": "시럽·크림 또는 양 많이",
         "status": "depends",
-        "fat": "1",
+        "fat": 1,
         "note": "첨가물과 음용량에 따라 다를 수 있습니다."
       }
     ],
@@ -929,7 +929,7 @@ const entries: Entry[] = [
       {
         "name": "시럽·크림 또는 양 많이",
         "status": "depends",
-        "fat": "1",
+        "fat": 1,
         "note": "첨가물과 음용량에 따라 다를 수 있습니다."
       }
     ],
@@ -955,7 +955,7 @@ const entries: Entry[] = [
       {
         "name": "시럽·크림 또는 양 많이",
         "status": "heavy",
-        "fat": "2",
+        "fat": 2,
         "note": "첨가물과 음용량에 따라 다를 수 있습니다."
       }
     ],
