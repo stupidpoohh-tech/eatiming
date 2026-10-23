@@ -7,6 +7,7 @@
  * - `npm run db:seed:gen`으로 migrations/0002_seed_foods.sql을 생성한다.
  */
 import type { Cuisine, FoodStatus, FormCategory, Level } from './types';
+import { P0_FOODS } from './food-data-p0';
 
 export interface RawVariant {
   name: string;
@@ -29,6 +30,7 @@ export interface RawFood {
 }
 
 interface Opts {
+  status?: FoodStatus;
   a?: string[];
   t?: string[];
   d?: string;
@@ -43,7 +45,7 @@ function group(defaults: { status: FoodStatus; form: FormCategory; cuisine: Cuis
     name,
     form: o.form ?? defaults.form,
     cuisine: o.cuisine ?? defaults.cuisine,
-    status: defaults.status,
+    status: o.status ?? defaults.status,
     fat,
     spice,
     aliases: o.a ?? [],
@@ -278,16 +280,16 @@ const easy: RawFood[] = [
     ['자완무시', 1, 1, { form: 'side', a: ['차완무시', '일본식 계란찜'], t: ['계란'] }],
   ]),
   ...group({ status: 'easy', form: 'healthy', cuisine: 'western', tags: ['건강식'] }, [
-    ['그릴 치킨 샐러드', 1, 1, { a: ['치킨 샐러드', '닭가슴살 샐러드'], t: ['샐러드', '닭고기'], d: '드레싱 종류(크림·오일)에 따라 기름기 차이가 큽니다.' }],
-    ['저유분 토마토 파스타', 1, 2, { form: 'noodle', a: ['토마토 파스타', '토마토파스타'], t: ['파스타'], d: '오일을 적게 쓴 토마토소스 기준입니다.' }],
+    ['그릴 치킨 샐러드', 2, 1, { status: 'depends', v: [['오일·드레싱 적게', 'easy', 1, '닭고기와 채소 위주'], ['크림 드레싱·치즈 많이', 'heavy', 3, '지방이 많은 드레싱 추가']],  a: ['치킨 샐러드', '닭가슴살 샐러드'], t: ['샐러드', '닭고기'], d: '드레싱 종류(크림·오일)에 따라 기름기 차이가 큽니다.' }],
+    ['저유분 토마토 파스타', 1, 2, { form: 'noodle', a: [], t: ['파스타'], d: '오일을 적게 쓴 토마토소스 기준입니다.' }],
     ['미네스트로네', 1, 1, { form: 'soup', a: ['미네스트로네 수프', '이탈리아 야채수프'], t: ['수프'] }],
     ['야채수프', 1, 1, { form: 'soup', a: ['채소수프', '야채 수프'], t: ['수프'], d: '크림이 들어가지 않은 맑은 수프 기준입니다.' }],
     ['구운 흰살 생선 플레이트', 1, 1, { form: 'protein', a: ['생선 플레이트', '흰살생선 구이'], t: ['생선', '흰살생선'] }],
-    ['포케', 1, 1, { cuisine: 'other', a: ['포케볼', '포케 볼'], t: ['샐러드'], d: '소스(마요·오일)와 토핑에 따라 기름기 차이가 있습니다.' }],
+    ['포케', 2, 1, { status: 'depends', v: [['간장 소스·마요 적게', 'easy', 1, '가벼운 소스와 채소 위주'], ['마요·오일·아보카도 듬뿍', 'heavy', 3, '소스와 지방 많은 토핑']],  cuisine: 'other', a: ['포케볼', '포케 볼'], t: ['샐러드'], d: '소스(마요·오일)와 토핑에 따라 기름기 차이가 있습니다.' }],
   ]),
   ...group({ status: 'easy', form: 'healthy', cuisine: 'korean', tags: ['간편식'] }, [
-    ['삼각김밥', 1, 1, { form: 'rice', a: ['주먹밥', '편의점 삼각김밥'], d: '참치마요 등 마요네즈가 들어간 종류는 기름기가 높아집니다.' }],
-    ['닭가슴살 제품', 1, 1, { form: 'protein', a: ['닭가슴살 스테이크', '훈제 닭가슴살', '닭가슴살 소시지'], t: ['닭고기'] }],
+    ['삼각김밥', 2, 1, { status: 'depends', v: [['기본·채소·소스 적게', 'easy', 1, '마요·치즈 없는 종류'], ['참치마요·치즈 속재료', 'heavy', 3, '마요·치즈 포함']],  form: 'rice', a: ['주먹밥', '편의점 삼각김밥'], d: '참치마요 등 마요네즈가 들어간 종류는 기름기가 높아집니다.' }],
+    ['닭가슴살 제품', 2, 1, { status: 'depends', v: [['오리지널·기름 적게', 'easy', 1, '살코기 중심'], ['소시지·치즈·크림 소스', 'depends', 2, '가공과 소스 차이']],  form: 'protein', a: ['닭가슴살 스테이크', '훈제 닭가슴살', '닭가슴살 소시지'], t: ['닭고기'] }],
     ['저지방 그릭요거트', 1, 1, { cuisine: 'other', a: ['그릭요거트', '그릭 요거트', '무가당 요거트'], t: ['유제품'] }],
     ['백설기', 1, 1, { form: 'bakery', a: ['설기떡'], t: ['떡'] }],
     ['가래떡', 1, 1, { form: 'bakery', a: ['떡'], t: ['떡'] }],
@@ -578,4 +580,4 @@ const depends: RawFood[] = group({ status: 'depends', form: 'soup', cuisine: 'ko
   ],
 ]);
 
-export const FOOD_DATA: RawFood[] = [...heavy, ...easy, ...depends];
+export const FOOD_DATA: RawFood[] = [...heavy, ...easy, ...depends, ...P0_FOODS];
