@@ -1,65 +1,56 @@
 @import 'tailwindcss';
 @import 'pretendard/dist/web/variable/pretendardvariable-dynamic-subset.css';
 
-/* EATIMING 디자인 토큰 — 화이트·아이보리 기반, 세이지 그린·소프트 블루 보조 */
+/* EATIMING — clean white canvas, navy typography, restrained mandarin-orange accents.
+   Semantic palette separates the brand from warnings and destructive actions. */
 @theme {
   --font-sans: 'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, 'Apple SD Gothic Neo', 'Noto Sans KR', sans-serif;
 
-  --color-ivory: #fbf8f2;
-  --color-ivory-deep: #f3eee4;
-  --color-line: #e7e1d5;
-  --color-ink: #1f2a24;
-  --color-ink-soft: #55615a;
-  --color-ink-mute: #8a938d;
+  --color-ivory: #ffffff;
+  --color-ivory-deep: #f6f7f9;
+  --color-line: #e4e8ee;
+  --color-ink: #19263b;
+  --color-ink-soft: #566477;
+  --color-ink-mute: #788496;
 
-  --color-sage-50: #f1f6f2;
-  --color-sage-100: #e1ece4;
-  --color-sage-200: #c4dacb;
-  --color-sage-400: #7fa58b;
-  --color-sage-500: #5f8c6e;
-  --color-sage-600: #4f7a5e;
-  --color-sage-700: #3d6149;
+  --color-brand-50: #fff6f0;
+  --color-brand-100: #ffeadb;
+  --color-brand-200: #ffd1b5;
+  --color-brand-400: #f39d6e;
+  --color-brand-500: #ec7c3e;
+  --color-brand-600: #d86424;
+  --color-brand-700: #aa4519;
 
-  --color-sky-50: #eff5fb;
-  --color-sky-100: #dde9f6;
-  --color-sky-300: #9cc3e6;
-  --color-sky-500: #5b8fc4;
-  --color-sky-700: #3b6894;
+  --color-accent-50: #fff7f2;
+  --color-accent-100: #ffebdd;
+  --color-accent-300: #f9be9b;
+  --color-accent-500: #e87537;
+  --color-accent-700: #b8501f;
 
-  --color-honey-50: #fbf4e6;
-  --color-honey-100: #f5e6c6;
-  --color-honey-500: #b9862c;
-  --color-honey-700: #8a6119;
+  --color-honey-50: #fff8e9;
+  --color-honey-100: #fff0ca;
+  --color-honey-500: #bd842a;
+  --color-honey-700: #855918;
 
-  --color-clay-50: #fbefec;
-  --color-clay-100: #f4d9d2;
-  --color-clay-500: #b9604f;
-  --color-clay-700: #8f4436;
+  --color-clay-50: #fff1ef;
+  --color-clay-100: #fbd9d3;
+  --color-clay-500: #c96b60;
+  --color-clay-700: #a24138;
 
-  --radius-chip: 14px;
-  --shadow-soft: 0 1px 2px rgb(31 42 36 / 0.04), 0 4px 16px rgb(31 42 36 / 0.06);
-  --shadow-sheet: 0 -8px 32px rgb(31 42 36 / 0.12);
+  --radius-chip: 12px;
+  --shadow-soft: 0 2px 12px rgb(25 38 59 / 0.045);
+  --shadow-sheet: 0 -10px 36px rgb(25 38 59 / 0.12);
 
   --animate-sheet-in: sheet-in 220ms cubic-bezier(0.2, 0.8, 0.2, 1);
   --animate-fade-in: fade-in 180ms ease-out;
 
   @keyframes sheet-in {
-    from {
-      transform: translateY(24px);
-      opacity: 0;
-    }
-    to {
-      transform: translateY(0);
-      opacity: 1;
-    }
+    from { transform: translateY(24px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
   }
   @keyframes fade-in {
-    from {
-      opacity: 0;
-    }
-    to {
-      opacity: 1;
-    }
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 }
 
@@ -69,48 +60,36 @@
     -webkit-tap-highlight-color: transparent;
   }
   body {
-    @apply bg-ivory text-ink font-sans antialiased;
+    @apply bg-white text-ink font-sans antialiased;
     word-break: keep-all;
   }
+  ::selection {
+    background: var(--color-brand-100);
+    color: var(--color-ink);
+  }
   :focus-visible {
-    outline: 2px solid var(--color-sky-500);
+    outline: 2px solid var(--color-brand-600);
     outline-offset: 2px;
   }
-  button {
-    cursor: pointer;
-  }
-  button:disabled {
-    cursor: default;
-  }
+  button { cursor: pointer; }
+  button:disabled { cursor: default; }
 }
 
 @utility scrollbar-none {
   scrollbar-width: none;
-  &::-webkit-scrollbar {
-    display: none;
-  }
+  &::-webkit-scrollbar { display: none; }
 }
-
 @utility tap {
-  transition:
-    transform 120ms ease,
-    background-color 120ms ease,
-    border-color 120ms ease;
-  &:active:not(:disabled) {
-    transform: scale(0.97);
-  }
+  transition: transform 120ms ease, background-color 120ms ease, border-color 120ms ease;
+  &:active:not(:disabled) { transform: scale(0.98); }
 }
-
-/* 수백 개의 음식 칩: 화면 밖 칩의 렌더링 비용을 줄인다 */
+/* 수백 개의 음식 칩에서 화면 밖의 렌더링 비용을 줄인다. */
 @utility food-chip {
   content-visibility: auto;
   contain-intrinsic-size: auto 52px;
 }
-
 @media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
+  *, *::before, *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
   }
