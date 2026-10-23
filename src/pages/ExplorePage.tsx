@@ -38,6 +38,10 @@ export function ExplorePage() {
 
   return (
     <div className="space-y-4">
+      <div className="pt-2">
+        <h1 className="text-2xl font-extrabold tracking-tight">오늘의 메뉴</h1>
+        <p className="mt-0.5 text-sm text-ink-soft">지금 컨디션에 맞는 음식을 찾아보세요.</p>
+      </div>
       {user && shares.data && shares.data.incoming.length > 0 && (
         <BasisPicker
           value={basisOwnerId}
@@ -70,7 +74,7 @@ function BasisPicker({ value, options, onChange }: { value: string | null; optio
           onClick={() => onChange(o.id)}
           className={cx(
             'tap h-9 shrink-0 rounded-full border px-3.5 text-sm font-semibold',
-            value === o.id ? 'border-sky-500 bg-sky-50 text-sky-700' : 'border-line bg-white text-ink-soft',
+            value === o.id ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-line bg-white text-ink-soft',
           )}
         >
           {o.id ? `${o.name}님` : o.name}
@@ -123,12 +127,12 @@ function TimelineSummary({ user, basisOwnerId }: { user: User | null; basisOwner
   const views = ownMedViews(meds.data?.medications ?? [], meds.data?.logs ?? []);
   if (views.length === 0) {
     return (
-      <Link to="/meds" className="tap flex items-center gap-3 rounded-2xl border border-dashed border-sky-300 bg-sky-50 px-4 py-3">
+      <Link to="/meds" className="tap flex items-center gap-3 rounded-2xl border border-dashed border-accent-300 bg-accent-50 px-4 py-3">
         <span className="min-w-0 flex-1">
-          <span className="block font-semibold text-sky-700">복용 중인 약물을 등록해 보세요</span>
+          <span className="block font-semibold text-accent-700">복용 중인 약물을 등록해 보세요</span>
           <span className="block text-sm text-ink-soft">마지막 투여일을 입력하면 경과가 여기에 표시됩니다.</span>
         </span>
-        <ChevronRight size={18} className="text-sky-700" aria-hidden />
+        <ChevronRight size={18} className="text-accent-700" aria-hidden />
       </Link>
     );
   }
@@ -196,7 +200,7 @@ function ConditionPicker({
               onClick={() => onChange(c.id)}
               className={cx(
                 'tap flex min-h-14 flex-col items-center justify-center rounded-2xl border px-2 py-2 text-center',
-                active ? 'border-sage-500 bg-sage-50 text-sage-700 shadow-[var(--shadow-soft)]' : 'border-line bg-white text-ink-soft',
+                active ? 'border-brand-500 bg-brand-50 text-brand-700 shadow-[var(--shadow-soft)]' : 'border-line bg-white text-ink-soft',
                 readOnlyName && !active && 'opacity-60',
               )}
             >
@@ -275,7 +279,7 @@ function FoodExplorer({
   return (
     <section aria-label="음식 탐색" ref={resultsRef} className="scroll-mt-2">
       {/* 스크롤 중에도 바로 쓸 수 있는 검색·필터 */}
-      <div className="sticky top-0 z-30 -mx-4 space-y-2 border-b border-line/70 bg-ivory/95 px-4 pt-2 pb-2 backdrop-blur md:-mx-6 md:px-6">
+      <div className="sticky top-0 z-30 -mx-4 space-y-2 border-b border-line/70 bg-white/97 px-4 pt-2 pb-2 backdrop-blur md:-mx-6 md:px-6">
         <div className="relative">
           <Search size={18} className="pointer-events-none absolute top-1/2 left-3.5 -translate-y-1/2 text-ink-mute" aria-hidden />
           <input
@@ -287,7 +291,7 @@ function FoodExplorer({
             onChange={(e) => update({ q: e.target.value })}
             placeholder="음식 이름으로 찾기 (예: 모밀, 죽, ㅅㄱㅅ)"
             aria-label="음식 검색"
-            className="h-12 w-full rounded-2xl border border-line bg-white pr-11 pl-10 text-[16px] shadow-[var(--shadow-soft)] placeholder:text-ink-mute focus:border-sage-400 focus:outline-none [&::-webkit-search-cancel-button]:hidden"
+            className="h-12 w-full rounded-2xl border border-line bg-white pr-11 pl-10 text-[16px] shadow-[var(--shadow-soft)] placeholder:text-ink-mute focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-100 [&::-webkit-search-cancel-button]:hidden"
           />
           {state.q && (
             <button
@@ -324,7 +328,7 @@ function FoodExplorer({
               }}
               className={cx(
                 'h-9 appearance-none rounded-full border pr-7 pl-3 text-sm font-semibold',
-                state.cuisine ? 'border-sky-500 bg-sky-50 text-sky-700' : 'border-line bg-white text-ink-soft',
+                state.cuisine ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-line bg-white text-ink-soft',
               )}
             >
               <option value="">모든 나라</option>
@@ -350,7 +354,7 @@ function FoodExplorer({
                 }}
                 className={cx(
                   'tap h-9 shrink-0 rounded-full px-3.5 text-sm font-semibold whitespace-nowrap',
-                  state.form === c.id ? 'bg-ink text-white' : 'border border-line bg-white text-ink-soft',
+                  state.form === c.id ? 'bg-brand-600 text-white' : 'border border-line bg-white text-ink-soft',
                 )}
               >
                 {c.label}
@@ -373,7 +377,7 @@ function FoodExplorer({
               }}
               className={cx(
                 'tap inline-flex h-9 shrink-0 items-center gap-1 rounded-full border px-2.5 text-[13px] font-semibold whitespace-nowrap',
-                state.status === f.id ? 'border-sage-500 bg-sage-50 text-sage-700' : 'border-line bg-white text-ink-soft',
+                state.status === f.id ? 'border-brand-500 bg-brand-50 text-brand-700' : 'border-line bg-white text-ink-soft',
               )}
             >
               {f.id !== 'all' && <StatusIcon status={f.id} size="sm" />}
@@ -528,7 +532,7 @@ const FoodChip = memo(function FoodChip({ item, hasRecord, onOpen }: { item: Ran
     <button
       type="button"
       onClick={() => onOpen(food.id)}
-      className="tap flex h-full min-h-[60px] w-full items-center gap-2.5 rounded-[var(--radius-chip)] border border-line bg-white px-3 py-2 text-left hover:border-sage-200"
+      className="tap flex h-full min-h-[60px] w-full items-center gap-2.5 rounded-[var(--radius-chip)] border border-line bg-white px-3 py-2 text-left hover:border-brand-200"
       aria-label={`${food.name}, ${STATUS_LABEL[status]}${hint ? `, ${hint}` : ''}${hasRecord ? ', 내 기록 있음' : ''}`}
       data-food={food.name}
     >
@@ -537,7 +541,7 @@ const FoodChip = memo(function FoodChip({ item, hasRecord, onOpen }: { item: Ran
         <span className="line-clamp-2 text-[15px] leading-snug font-semibold">{food.name}</span>
         {hint && <span className="block truncate text-[11px] leading-tight text-ink-mute">{hint}</span>}
       </span>
-      {hasRecord && <span className="size-1.5 shrink-0 rounded-full bg-sky-500" aria-hidden />}
+      {hasRecord && <span className="size-1.5 shrink-0 rounded-full bg-accent-500" aria-hidden />}
     </button>
   );
 });
