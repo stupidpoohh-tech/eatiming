@@ -255,7 +255,7 @@ function FoodExplorer({
             <h2 className="text-[19px] font-extrabold">전체 메뉴 탐색</h2>
             <p className="mt-0.5 text-xs text-ink-soft">검색하거나 종류별로 찾아보세요.</p>
           </div>
-          <span className="shrink-0 text-xs font-semibold text-ink-soft" data-testid="count-all">전체 {result ? result.counts.all : '–'}</span>
+          <span className="shrink-0 text-xs font-semibold text-ink-soft">전체 <strong data-testid="count-all">{result ? result.counts.all : '–'}</strong></span>
         </div>
       <div className="sticky top-0 z-30 space-y-2 border-b border-line/60 bg-white/95 px-3.5 pt-2 pb-3 backdrop-blur sm:px-5">
         <div className="relative">
