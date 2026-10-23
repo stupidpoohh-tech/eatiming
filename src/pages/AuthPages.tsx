@@ -67,7 +67,7 @@ export function LoginPage() {
       </Card>
       <p className="mt-4 text-center text-sm text-ink-soft">
         처음이신가요?{' '}
-        <Link to={`/signup${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-sage-700 underline underline-offset-2">
+        <Link to={`/signup${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-brand-700 underline underline-offset-2">
           가입하기
         </Link>
       </p>
@@ -128,9 +128,9 @@ export function SignupPage() {
             />
           </Field>
           <label className="flex items-start gap-2 rounded-xl bg-ivory p-3 text-sm">
-            <input type="checkbox" className="mt-0.5 size-5 accent-sage-600" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
+            <input type="checkbox" className="mt-0.5 size-5 accent-brand-600" checked={agree} onChange={(e) => setAgree(e.target.checked)} />
             <span>
-              <Link to="/privacy" className="font-semibold text-sage-700 underline underline-offset-2" target="_blank">
+              <Link to="/privacy" className="font-semibold text-brand-700 underline underline-offset-2" target="_blank">
                 개인정보 처리 안내
               </Link>
               를 확인했으며, 서비스 제공을 위한 개인정보(이메일, 약물·식사 기록) 수집·이용에 동의합니다.
@@ -148,7 +148,7 @@ export function SignupPage() {
       </Card>
       <p className="mt-4 text-center text-sm text-ink-soft">
         이미 계정이 있나요?{' '}
-        <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-sage-700 underline underline-offset-2">
+        <Link to={`/login${next ? `?next=${encodeURIComponent(next)}` : ''}`} className="font-semibold text-brand-700 underline underline-offset-2">
           로그인
         </Link>
       </p>
