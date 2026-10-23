@@ -19,7 +19,7 @@ describe('초기 음식 데이터', () => {
   it('중복 없이 모든 항목이 등록되어 있다', () => {
     expect(new Set(foods.map((f) => f.name)).size).toBe(foods.length);
     expect(new Set(foods.map((f) => f.id)).size).toBe(foods.length);
-    expect(foods.length).toBe(198);
+    expect(foods.length).toBe(262);
   });
 
   it('별칭이 다른 음식 이름과 겹치지 않는다', () => {
@@ -42,6 +42,26 @@ describe('초기 음식 데이터', () => {
 });
 
 describe('검색', () => {
+  it('조리법 이름과 초성으로도 대표 음식이 검색된다', () => {
+    for (const [term, parent] of [['돌솥비빔밥', '비빔밥'], ['장칼국수', '칼국수'], ['참치마요', '김밥'], ['ㅊㅊㅁㅇ', '김밥']] as const) {
+      expect(names(explore(foods, index, q({ q: term }), 'normal')), term).toContain(parent);
+    }
+  });
+
+  it('추가된 대표 일상 음식 64개를 찾을 수 있다', () => {
+    for (const term of ['된장찌개', '마라탕', '샌드위치', '닭죽', '계란말이', '아메리카노', '고등어구이', '누룽지']) {
+      expect(names(explore(foods, index, q({ q: term }), 'normal'))).toContain(term);
+    }
+  });
+
+  it('조리법 따라 다른 메뉴는 조건부 옵션을 가진다', () => {
+    for (const term of ['삼각김밥', '포케', '그릴 치킨 샐러드', '시리얼', '전복죽']) {
+      const f = foods.find((x) => x.name === term);
+      expect(f?.status).toBe('depends');
+      expect(f?.variants.length).toBeGreaterThan(0);
+    }
+  });
+
   it('별칭과 띄어쓰기 차이를 허용한다', () => {
     for (const term of ['모밀', '메밀소바', '소바', '메밀 소바']) {
       expect(names(explore(foods, index, q({ q: term }), 'normal')), term).toContain('메밀소바');
